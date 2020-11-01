@@ -1,6 +1,6 @@
 package pong;
 
-/*Teste de comit*/
+/*Teste de comit 2 */
 
 import java.awt.Canvas;
 import java.awt.Color;
