@@ -64,7 +64,11 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			this.createBufferStrategy(3); //crie um buffer = 3
 			return;
 		}
-		Graphics g = layer.getGraphics();
+		
+		Graphics g = bs.getDrawGraphics();
+		g.drawImage(layer, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
+		
+		g = layer.getGraphics();
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -73,8 +77,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		enemy.render(g);
 		ball.render(g);
 		
-		g = bs.getDrawGraphics();
-		g.drawImage(layer, 0, 0, WIDTH*SCALE, HEIGHT*SCALE, null);
+		
 				
 		bs.show();
 		
