@@ -43,10 +43,10 @@ public class Ball {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				Game.enemy.upScore();
 				Game.ball = new Ball(100, 5);
 			}
-			es =true;
-			Game.enemy.upScore();
+			es =true;			
 			return;
 		}else if(y < -5) {
 			if (ps) {
@@ -55,10 +55,11 @@ public class Ball {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				Game.player.upScore();
 				Game.ball = new Ball(100, 5);
 			}
 			ps = true;
-			Game.player.upScore();
+			
 			return;
 		}
 		
