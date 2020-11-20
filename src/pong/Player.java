@@ -7,7 +7,7 @@ import java.awt.Graphics;
 public class Player {
 	
 	public boolean right, left;
-	public int x, y;
+	public double x, y, speed;
 	public int width, height;
 	private int score;
 	
@@ -18,6 +18,7 @@ public class Player {
 		this.width = 40;
 		this.height = 5;
 		this.score = 0;
+		this.speed = 1.5;
 	}
 	
 	public void upScore() {
@@ -26,9 +27,9 @@ public class Player {
 	
 	public void tick() {
 		if(right) {
-			x++;
+			x+=speed;
 		}else if (left) {
-			x--;
+			x-=speed;
 		}
 		if(x+width > Game.WIDTH) {
 			x = Game.WIDTH - width;
@@ -39,7 +40,7 @@ public class Player {
 	
 	public void render(Graphics g){ //Graphics manipula imagens
 		g.setColor(Color.WHITE); //Escolhe a cor
-		g.fillRect(x, y, width, height);//cria retangulo (x, y, w, h)
+		g.fillRect((int)x, (int)y, width, height);//cria retangulo (x, y, w, h)
 		g.setFont(new Font("Arial", Font.BOLD, 10));
 		g.drawString(Integer.toString(score), 5, 80);
 		
