@@ -25,6 +25,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static Player player;
 	public static Enemy enemy;
 	public static Ball ball;
+	
+	public Thread thread;
+	public boolean isRunning;
 
 	
 	public Game() {
@@ -32,30 +35,39 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		this.addKeyListener(this);
 		player = new Player(100, HEIGHT-5);
 		enemy = new Enemy(100, 0);
-		ball = new Ball(100, HEIGHT/2);
+		ball = new Ball(100, 5);
+		startFrame();
 	}
 	
-	public static void restart() {
-		player.x = 100;
-		player.y = HEIGHT-5;
-		enemy.x = 100;
-		enemy.y = 0;
-		ball.x = 100;
-		ball.dy = HEIGHT/2;
-	}
 	
 	public static void main(String[] args) {
 		Game game = new Game();		
-		//MÉTODO DE CRIAÇÃO DE JANELA-------------------------------------//
+		game.start();
+	}
+	
+	public void startFrame(){
 		JFrame frame = new JFrame("Pong"); //Objeto Java para criar janela
 		frame.setResizable(false); // Bloqueia ajuste de janela
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Fechar a janela para o processo		
-		frame.add(game); //busca construtor
+		frame.add(this); //busca construtor
 		frame.pack();	
 		frame.setLocationRelativeTo(null); //Deixa janela no centro(Após criação para não seta pela ponta
 		frame.setVisible(true); // Deixa janela visivel		
-		
-		new Thread(game).start();
+	}
+	
+	public synchronized void start() {
+		thread = new Thread(this);
+		isRunning = true;
+		thread.start();		
+	}
+	
+	public synchronized void stop() {
+		isRunning = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void tick() {
@@ -90,16 +102,20 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	@Override
 	public void run() {
-		while(true) {
-			tick();
-			render();
-			
-			try {
-				Thread.sleep(1000/60);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		long lastTime = System.nanoTime();
+		double frameRate = 60.0;
+		double nanosPerFrame = 1000000000 / frameRate;
+		while(isRunning) {
+			long now = System.nanoTime();
+			if ((now - lastTime)/nanosPerFrame>=1) {
+				lastTime = now;
+				tick();
+				render();
 			}
+
 		}
+		
+		stop();
 		
 	}
 

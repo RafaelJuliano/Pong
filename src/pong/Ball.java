@@ -1,6 +1,7 @@
 package pong;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
@@ -13,11 +14,15 @@ public class Ball {
 	public double dx, dy;
 	public double speed = 2.3;
 	
+	private boolean ps, es;
+	
 	public Ball(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.width = 4;
 		this.height = 4;
+		this.ps = false;
+		this.es = false;
 		
 		int angle = new Random().nextInt(75)+45;		
 		this.dx = Math.cos(Math.toRadians(angle));
@@ -25,19 +30,34 @@ public class Ball {
 	}
 
 	public void tick() {	
-				
 		if(x+(dx*speed) + width >= Game.WIDTH) {
 			dx*= -1;
 		}else if(x+(dx*speed) <0) {
 			dx*= -1;
 		}
 		
-		if(y >= Game.HEIGHT) {
-			Game.ball = new Ball(100, Game.HEIGHT/2);
+		if(y >= Game.HEIGHT) {			
+			if (es) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				Game.ball = new Ball(100, 5);
+			}
+			es =true;
 			Game.enemy.upScore();
 			return;
-		}else if(y < 0) {
-			Game.ball = new Ball(100, Game.HEIGHT/2);
+		}else if(y < -5) {
+			if (ps) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				Game.ball = new Ball(100, 5);
+			}
+			ps = true;
 			Game.player.upScore();
 			return;
 		}
