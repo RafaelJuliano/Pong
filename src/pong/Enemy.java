@@ -23,17 +23,11 @@ public class Enemy {
 
 	public void tick() {
 		
-		x+= (Game.ball.x - x - 20) * 0.03;
-		if(right) {
-			x++;
-		}else if (left) {
-			x--;
+		if (Game.ball.dy > 0) {
+			x+= ((Game.WIDTH/2)-(width/2) - x)* 0.04;
+		}else {
+			x+= (Game.ball.x - x - 20) * 0.04;
 		}
-		if(x+width > Game.WIDTH) {
-			x = Game.WIDTH - width;
-		}else if(x < 0) {
-			x = 0;
-		}		
 		
 	}
 	
