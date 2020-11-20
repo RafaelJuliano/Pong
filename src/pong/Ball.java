@@ -33,10 +33,12 @@ public class Ball {
 		}
 		
 		if(y >= Game.HEIGHT) {
-			new Game();
+			Game.ball = new Ball(100, Game.HEIGHT/2);
+			Game.enemy.upScore();
 			return;
 		}else if(y < 0) {
-			new Game();
+			Game.ball = new Ball(100, Game.HEIGHT/2);
+			Game.player.upScore();
 			return;
 		}
 		
