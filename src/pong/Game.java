@@ -13,7 +13,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable,KeyListener{	
+
+public class Game extends Canvas implements Runnable, KeyListener{	
 	
 	private static final long serialVersionUID = 1L;
 	public static int WIDTH = 160;
@@ -28,10 +29,12 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	public Thread thread;
 	public boolean isRunning;
+	
+
 
 	
 	public Game() {
-		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));
+		this.setPreferredSize(new Dimension(WIDTH*SCALE, HEIGHT*SCALE));		
 		this.addKeyListener(this);
 		player = new Player(100, HEIGHT-5);
 		enemy = new Enemy(100, 0);
@@ -118,7 +121,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		stop();
 		
 	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
@@ -138,4 +140,5 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		// TODO Auto-generated method stub		
 	}
 
+	
 }
